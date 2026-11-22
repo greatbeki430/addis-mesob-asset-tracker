@@ -19,7 +19,7 @@ import EmptyState from "../components/ui/EmptyState.jsx";
 import Pagination from "../components/ui/Pagination.jsx";
 import Modal from "../components/ui/Modal.jsx";
 
-const LIMIT = 10;
+const LIMIT = 8;
 const EMPTY = {
   fullName: "",
   username: "",

@@ -20,7 +20,7 @@ import Modal from "../components/ui/Modal.jsx";
 import ConfirmDialog from "../components/ui/ConfirmDialog.jsx";
 import { AssetIcon } from "../components/gate/Cards.jsx";
 
-const LIMIT = 10;
+const LIMIT = 8;
 const EMPTY = {
   serialNumber: "",
   assetTag: "",

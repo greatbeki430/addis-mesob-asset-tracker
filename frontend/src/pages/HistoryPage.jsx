@@ -17,7 +17,7 @@ import Loader from "../components/ui/Loader.jsx";
 import EmptyState from "../components/ui/EmptyState.jsx";
 import Pagination from "../components/ui/Pagination.jsx";
 
-const LIMIT = 15;
+const LIMIT = 10;
 
 export default function HistoryPage() {
   const { t, tType, fmt } = useI18n();
