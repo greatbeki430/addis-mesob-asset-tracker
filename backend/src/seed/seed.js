@@ -1,7 +1,14 @@
+// ============================================================
+// FILE:   backend/src/seed/seed.js
+// STATUS: UPDATED - existing file, replace its whole content with this
+// ============================================================
 /**
- * Seed script - creates the first admin + security accounts and some sample data.
- *   npm run seed          -> add missing records (safe to run repeatedly)
- *   npm run seed:reset    -> WIPE all collections first, then seed
+ * Seed script - creates ONLY the first admin + security accounts (no sample data).
+ * Employees and assets are added later from the web app (or the CSV/forms in the UI).
+ *
+ *   npm run seed          -> add the missing login accounts (safe to run repeatedly)
+ *   npm run seed:reset    -> WIPE all collections (users, employees, assets, gate logs),
+ *                            then create the login accounts again
  */
 const mongoose = require("mongoose");
 const env = require("../config/env");
@@ -9,90 +16,6 @@ const User = require("../models/User");
 const Employee = require("../models/Employee");
 const Asset = require("../models/Asset");
 const GateLog = require("../models/GateLog");
-
-const employees = [
-  {
-    employeeId: "AK-001",
-    fullName: "Yared Hailu",
-    department: "Building Permit",
-    phone: "+251 92 324 7742",
-  },
-  {
-    employeeId: "AK-002",
-    fullName: "Efa Kusa",
-    department: "Building Permit",
-    phone: "+251 92 110 0522",
-  },
-  {
-    employeeId: "AK-003",
-    fullName: "Gezagn Bekele",
-    department: "Cybersecurity Analyst",
-    phone: "0961305788",
-  },
-  {
-    employeeId: "AK-004",
-    fullName: "Bayisa Bekele",
-    department: "Cybersecurity Analyst",
-    phone: "+251 92 207 8341",
-  },
-  {
-    employeeId: "AK-005",
-    fullName: "Biya Kumilachew",
-    department: "Network Engineer",
-    phone: "+251 90 235 2728",
-  },
-  {
-    employeeId: "AK-006",
-    fullName: "Daniel Elias",
-    department: "Software Administrator",
-    phone: "0930322071",
-  },
-];
-
-const assets = [
-  {
-    serialNumber: "PF3K2L91",
-    assetTag: "AK-LT-0001",
-    type: "Laptop",
-    brand: "Lenovo",
-    model: "ThinkPad E14",
-  },
-  {
-    serialNumber: "CND9341XYZ",
-    assetTag: "AK-LT-0002",
-    type: "Laptop",
-    brand: "HP",
-    model: "ProBook 450 G9",
-  },
-  {
-    serialNumber: "R9LM44QP",
-    assetTag: "AK-LT-0003",
-    type: "Laptop",
-    brand: "Dell",
-    model: "Latitude 5420",
-  },
-  {
-    serialNumber: "DMPX7H2Q",
-    assetTag: "AK-TB-0001",
-    type: "Tablet",
-    brand: "Apple",
-    model: "iPad 9th Gen",
-  },
-  {
-    serialNumber: "RF8N30ABCD",
-    assetTag: "AK-TB-0002",
-    type: "Tablet",
-    brand: "Samsung",
-    model: "Galaxy Tab A8",
-  },
-  {
-    serialNumber: "MJ0A55TT",
-    assetTag: "AK-PR-0001",
-    type: "Projector",
-    brand: "Epson",
-    model: "EB-X06",
-  },
-];
 
 const run = async () => {
   await mongoose.connect(env.mongoUri);
@@ -131,22 +54,8 @@ const run = async () => {
     }
   }
 
-  for (const emp of employees) {
-    await Employee.updateOne(
-      { employeeId: emp.employeeId },
-      { $setOnInsert: emp },
-      { upsert: true },
-    );
-  }
-  for (const asset of assets) {
-    await Asset.updateOne(
-      { serialNumber: asset.serialNumber },
-      { $setOnInsert: asset },
-      { upsert: true },
-    );
-  }
   console.log(
-    `[seed] employees: ${await Employee.countDocuments()}, assets: ${await Asset.countDocuments()}`,
+    `[seed] users: ${await User.countDocuments()}, employees: ${await Employee.countDocuments()}, assets: ${await Asset.countDocuments()}`,
   );
 
   console.log("\nSign-in credentials (change them after first login!):");

@@ -9,7 +9,7 @@ export default function Pagination({
   page,
   pages,
   total,
-  limit = 10,
+  limit = 8,
   onChange,
 }) {
   const { t } = useI18n();
