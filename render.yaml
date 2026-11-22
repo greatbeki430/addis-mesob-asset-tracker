@@ -1,0 +1,36 @@
+# ============================================================
+# FILE:   render.yaml  (project root)
+# STATUS: NEW file - create it at this path
+# ============================================================
+# Optional "Blueprint": lets Render create the backend service from this file.
+# (You can also create the service by hand in the Render dashboard - see the deployment guide.)
+services:
+  - type: web
+    name: addis-mesob-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 20
+      - key: BRANCH_NAME
+        value: Addis Ketema Branch
+      - key: TZ_OFFSET_MINUTES
+        value: 180
+      - key: OVERDUE_HOURS
+        value: 24
+      - key: JWT_EXPIRES_IN
+        value: 12h
+      # Secrets - Render asks you to type these in the dashboard (they are never stored in Git)
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false
